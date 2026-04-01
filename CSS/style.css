@@ -24,7 +24,7 @@ html {
   font-family: Arial, sans-serif;
 }
 
-body {
+.body-bg {
   background-image: url("../IMG/hero.jpg");
   background-size: cover;
   background-position: center;
@@ -196,6 +196,99 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+
+.sobre-page section {
+  max-width: 1100px;
+  margin: 120px auto 60px;
+  padding: 0 20px;
+}
+
+.sobre-page .barra-bonita {
+  display: block;
+  width: 140px;
+  height: 6px;
+  margin: 6px auto 18px;
+  background: linear-gradient(90deg, #c79c6b, #ddba88);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.sobre-page h1 {
+  font-size: 32px;
+  margin: 0 0 10px 0;
+  color: #111;
+}
+
+.sobre-page section p {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.sobre-page .footer {
+  margin-top: 40px;
+}
+
+.sobre-page .sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 40px;
+  align-items: start;
+}
+
+.sobre-page .sobre-left {
+  padding: 10px 24px 0 0;
+}
+
+.sobre-page .sobre-left .barra-bonita {
+  display: block;
+  width: 80px;
+  height: 4px;
+  margin: 0 0 18px 0;
+  background: linear-gradient(90deg, #c79c6b, #ddba88);
+  border-radius: 4px;
+}
+
+.sobre-page h1 {
+  font-size: 72px;
+  margin: 6px 0 18px 0;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.sobre-page .sobre-text p {
+  max-width: 680px;
+}
+
+.sobre-page .socials {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+}
+
+.sobre-page .socials a { color: #111; font-size: 22px; }
+
+.sobre-page .sobre-right .photo-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: start;
+}
+
+.sobre-page .sobre-right img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  padding-top: 49px;
+}
+
+@media (max-width: 900px) {
+  .sobre-page .sobre-grid { grid-template-columns: 1fr; }
+  .sobre-page h1 { font-size: 40px; }
+  .sobre-page .sobre-left { padding-right: 0; }
+  .sobre-page .barra-bonita { margin-left: auto; margin-right: auto; }
 }
 
 .ideias-menus h2 {
@@ -404,4 +497,12 @@ body {
     gap: 15px;
     text-align: center;
   }
+}
+.barra-bonita {
+  width: 140px;           
+  height: 6px;            
+  margin: 12px auto;      
+  background: linear-gradient(90deg, #c79c6b, #ddba88); 
+  border-radius: 4px;     
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
