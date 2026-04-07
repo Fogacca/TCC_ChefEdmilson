@@ -11,6 +11,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=The+Seasons&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="CSS/style.css" />
     <title>Chef Edmilson</title>
     <style>
@@ -51,46 +54,34 @@
       </nav>
     </header>
 
-    <section>
-      <div class="sobre-grid">
-        <div class="sobre-left">
-          <span class="barra-bonita"></span>
-          <h1>Edmilson</h1>
-          <div class="sobre-text">
-            <p>
-              Com mais de 20 anos de experiência, o Chef Edmilson é um mestre da
-              alta cozinha, especializado em criar experiências gastronômicas
-              personalizadas para jantares privados, eventos corporativos e
-              celebrações especiais. Sua paixão pela culinária e dedicação à
-              excelência o tornam a escolha ideal para quem busca uma
-              experiência culinária única e memorável em Sorocaba e região.
-            </p>
-            <p>
-              O Chef Edmilson é conhecido por sua habilidade em combinar
-              ingredientes frescos e técnicas culinárias inovadoras para criar
-              pratos que encantam tanto o paladar quanto a visão. Ele trabalha
-              de perto com seus clientes para entender suas preferências e
-              necessidades, garantindo que cada menu seja cuidadosamente
-              elaborado para atender às expectativas e criar momentos
-              inesquecíveis.
-            </p>
-            <p>
-              Além de sua expertise culinária, o Chef Edmilson é um profissional
-              dedicado, comprometido em oferecer um serviço impecável e uma
-              experiência gastronômica de alta qualidade. Seja para um jantar
-              íntimo, um evento corporativo ou uma celebração especial, o Chef
-              Edmilson está pronto para transformar sua ocasião em um evento
-              culinário extraordinário.
-            </p>
-          </div>
+    <main class="login-container">
+      <div class="login-wrapper">
+        <div class="login-header-top">
+          <span class="login-line"></span>
+          <h1>Cadastre - se</h1>
         </div>
-        <div class="sobre-right">
-          <div class="photo-wrap">
-            <img src="IMG/chef-edmilson.png" alt="Chef Edmilson" />
+        
+        <div class="login-box">
+          <form class="login-form">
+            <div class="form-group">
+              <label for="usuario">Usuário</label>
+              <input type="text" id="usuario" name="usuario" required />
+            </div>
+
+            <div class="form-group">
+              <label for="senha">Senha</label>
+              <input type="password" id="senha" name="senha" required />
+            </div>
+
+            <button type="submit" class="btn-entrar">Entrar</button>
+          </form>
+
+          <div class="login-footer">
+            <p class="no-account">Já possui uma conta?</p>
+            <a href="login.html" class="cadastre-link">Faça login</a>
           </div>
-        </div>
       </div>
-    </section>
+    </main>
 
     <footer class="footer">
       <div class="footer-content">
