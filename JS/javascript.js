@@ -14,3 +14,24 @@ window.addEventListener('scroll', function() {
     logoLight.style.display = 'none';
   }
 });
+
+const timelineObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const timelineItems = entry.target.querySelectorAll('.timeline-item');
+      
+      timelineItems.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.add('animate');
+        }, index * 100);
+      });
+      
+      timelineObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+const timelineSection = document.querySelector('.timeline-section');
+if (timelineSection) {
+  timelineObserver.observe(timelineSection);
+}
