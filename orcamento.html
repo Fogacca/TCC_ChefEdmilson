@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="CSS/style.css" />
-    <title>Chef Edmilson</title>
+    <title>Chef Edmilson - Solicitar Orçamento</title>
 </head>
 
 <body>
@@ -35,161 +35,191 @@
     </header>
 
     <main class="orcamento-container">
+        <!-- CABEÇALHO DO FORMULÁRIO -->
         <section class="orcamento-header">
             <h1>Solicitar Orçamento</h1>
-            <p>Preencha o formulário abaixo com os detalhes do seu evento. Responderemos em até 48 horas úteis com uma
-                proposta personalizada.</p>
+            <p>Preencha as informações do seu evento em 4 etapas simples. Responderemos em até 48 horas úteis.</p>
         </section>
 
+        <!-- INDICADOR DE PROGRESSO -->
+        <div class="progress-bar-container">
+            <div class="progress-indicator">
+                <span class="progress-text">Etapa <span id="currentStep">1</span> de 4</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULÁRIO COM ETAPAS -->
         <section class="form-container">
             <form id="orcamentoForm" class="orcamento-form">
-                <div class="form-row">
+
+                <!-- ============================================
+                     ETAPA 1: INFORMAÇÕES BÁSICAS
+                     ============================================ -->
+                <div class="form-step active" id="step1">
+                    <div class="step-header">
+                        <h2>Informações Básicas</h2>
+                        <p>Comece nos contando um pouco sobre você</p>
+                    </div>
+
                     <div class="form-group">
                         <label for="nome">Nome completo <span class="required">*</span></label>
                         <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                        <span class="error-message" id="erroNome"></span>
                     </div>
+
                     <div class="form-group">
                         <label for="email">Email <span class="required">*</span></label>
                         <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                        <span class="error-message" id="erroEmail"></span>
                     </div>
-                </div>
 
-                <div class="form-row">
                     <div class="form-group">
                         <label for="telefone">Telefone <span class="required">*</span></label>
                         <input type="tel" id="telefone" name="telefone" placeholder="(15) 99999-0000" required>
+                        <span class="error-message" id="erroTelefone"></span>
                     </div>
+
                     <div class="form-group">
                         <label for="convidados">Número de convidados <span class="required">*</span></label>
                         <input type="number" id="convidados" name="convidados" placeholder="Ex: 20" min="1" required>
+                        <span class="error-message" id="erroConvidados"></span>
                     </div>
                 </div>
 
-                <div class="form-group full-width">
-                    <label for="tipoEvento">Tipo de evento <span class="required">*</span></label>
-                    <select id="tipoEvento" name="tipoEvento" required>
-                        <option value="">Selecione</option>
-                        <option value="casamento">Casamento</option>
-                        <option value="aniversario">Aniversário</option>
-                        <option value="corporativo">Evento Corporativo</option>
-                        <option value="formatura">Formatura</option>
-                        <option value="inaugural">Festa de Inauguração</option>
-                        <option value="outro">Outro</option>
-                    </select>
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="dataEvento">Data do evento <span class="required">*</span></label>
-                    <input type="date" id="dataEvento" name="dataEvento" required>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Estilos culinários <span class="optional">(opcional)</span></label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="brasileira">
-                            <span>Brasileira regional</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="italiana">
-                            <span>Italiana</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="francesa">
-                            <span>Francesa</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="mediterranea">
-                            <span>Mediterrânea</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="vegana">
-                            <span>Vegana/Vegetariana</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="churrasco">
-                            <span>Churrasco/BBQ</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="estilos" value="fingerfood">
-                            <span>Finger food</span>
-                        </label>
+                <!-- ============================================
+                     ETAPA 2: DETALHES DO EVENTO
+                     ============================================ -->
+                <div class="form-step" id="step2">
+                    <div class="step-header">
+                        <h2>Detalhes do Evento</h2>
+                        <p>Conte-nos sobre a ocasião especial</p>
                     </div>
-                </div>
 
-                <div class="form-group full-width">
-                    <label>Restrições alimentares <span class="optional">(opcional)</span></label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="restricoes" value="vegetariano">
-                            <span>Vegetariano</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="restricoes" value="vegano">
-                            <span>Vegano</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="restricoes" value="semlactose">
-                            <span>Sem lactose</span>
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="restricoes" value="alergia">
-                            <span>Alergia a frutos do mar</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="mensagem">Mensagem adicional <span class="optional"></span></label>
-                    <textarea id="mensagem" name="mensagem"
-                        placeholder="Conte-nos mais sobre o seu evento, preferências ou dúvidas..." rows="5"></textarea>
-                </div>
-
-                <div class="form-group full-width">
-                    <label class="address-header">Endereço <span class="optional"></span></label>
-                </div>
-
-                <div class="form-row">
                     <div class="form-group">
-                        <label for="rua">Rua <span class="optional"></span></label>
-                        <input type="text" id="rua" name="rua" placeholder="Nome da rua">
+                        <label for="tipoEvento">Tipo de evento <span class="required">*</span></label>
+                        <select id="tipoEvento" name="tipoEvento" required>
+                            <option value="">Selecione um tipo de evento</option>
+                            <option value="casamento">Casamento</option>
+                            <option value="aniversario">Aniversário</option>
+                            <option value="corporativo">Evento Corporativo</option>
+                            <option value="formatura">Formatura</option>
+                            <option value="inaugural">Festa de Inauguração</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                        <span class="error-message" id="erroTipoEvento"></span>
                     </div>
+
                     <div class="form-group">
-                        <label for="numero">Número <span class="optional"></span></label>
-                        <input type="text" id="numero" name="numero" placeholder="Ex: 123">
+                        <label for="dataEvento">Data do evento <span class="required">*</span></label>
+                        <input type="date" id="dataEvento" name="dataEvento" required>
+                        <span class="error-message" id="erroDataEvento"></span>
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="complemento">Complemento <span class="optional"></span></label>
-                        <input type="text" id="complemento" name="complemento" placeholder="Apto, sala, etc">
+                <!-- ============================================
+                     ETAPA 3: PREFERÊNCIAS & MENSAGEM
+                     ============================================ -->
+                <div class="form-step" id="step3">
+                    <div class="step-header">
+                        <h2>Preferências & Observações</h2>
+                        <p>Compartilhe suas preferências e necessidades especiais</p>
                     </div>
+
                     <div class="form-group">
-                        <label for="bairro">Bairro <span class="optional"></span></label>
-                        <input type="text" id="bairro" name="bairro" placeholder="Nome do bairro">
+                        <label>Restrições alimentares <span class="optional">(opcional)</span></label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="restricoes" value="vegetariano">
+                                <span>Vegetariano</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="restricoes" value="vegano">
+                                <span>Vegano</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="restricoes" value="semlactose">
+                                <span>Sem lactose</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="restricoes" value="alergia">
+                                <span>Alergia a frutos do mar</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem adicional <span class="optional">(opcional)</span></label>
+                        <textarea id="mensagem" name="mensagem"
+                            placeholder="Descreva seus estilos culinários preferidos, restrições especiais, tema do evento, ou qualquer outra informação relevante..." rows="5"></textarea>
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="cidade">Cidade <span class="optional"></span></label>
-                        <input type="text" id="cidade" name="cidade" placeholder="Sua cidade">
+                <!-- ============================================
+                     ETAPA 4: ENDEREÇO
+                     ============================================ -->
+                <div class="form-step" id="step4">
+                    <div class="step-header">
+                        <h2>Endereço do Evento</h2>
+                        <p>Onde o evento será realizado?</p>
                     </div>
+
                     <div class="form-group">
-                        <label for="estado">Estado <span class="optional"></span></label>
-                        <input type="text" id="estado" name="estado" placeholder="Ex: SP" maxlength="2">
+                        <label for="rua">Rua <span class="required">*</span></label>
+                        <input type="text" id="rua" name="rua" placeholder="Nome da rua" required>
+                        <span class="error-message" id="erroRua"></span>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="numero">Número <span class="required">*</span></label>
+                            <input type="text" id="numero" name="numero" placeholder="Ex: 123" required>
+                            <span class="error-message" id="erroNumero"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="complemento">Complemento <span class="optional">(opcional)</span></label>
+                            <input type="text" id="complemento" name="complemento" placeholder="Apto, sala, etc">
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label for="cep">CEP <span class="optional"></span></label>
-                        <input type="text" id="cep" name="cep" placeholder="Ex: 18000-000">
+                        <label for="bairro">Bairro <span class="required">*</span></label>
+                        <input type="text" id="bairro" name="bairro" placeholder="Nome do bairro" required>
+                        <span class="error-message" id="erroBairro"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cidade">Cidade <span class="required">*</span></label>
+                            <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required>
+                            <span class="error-message" id="erroCidade"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado <span class="required">*</span></label>
+                            <input type="text" id="estado" name="estado" placeholder="Ex: SP" maxlength="2" required>
+                            <span class="error-message" id="erroEstado"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="cep">CEP <span class="required">*</span></label>
+                            <input type="text" id="cep" name="cep" placeholder="Ex: 18000-000" required>
+                            <span class="error-message" id="erroCep"></span>
+                        </div>
                     </div>
                 </div>
 
-                
-
+                <!-- BOTÕES DE NAVEGAÇÃO -->
                 <div class="form-actions">
-                    <button type="submit" class="btn-submit">Enviar</button>
+                    <button type="button" id="btnAnterior" class="btn-anterior" style="display: none;">
+                        <i class="bi bi-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" id="btnProximo" class="btn-proximo">
+                        Próximo <i class="bi bi-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="btnEnviar" class="btn-submit" style="display: none;">
+                        Enviar <i class="bi bi-check-lg"></i>
+                    </button>
                 </div>
             </form>
         </section>

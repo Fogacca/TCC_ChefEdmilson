@@ -122,3 +122,275 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+/* ================================================
+   FORMULÁRIO DE ORÇAMENTO - LÓGICA JAVASCRIPT
+   ================================================ */
+
+class FormularioOrcamento {
+    constructor() {
+        this.currentStep = 1;
+        this.totalSteps = 4;
+        this.form = document.getElementById('orcamentoForm');
+        this.btnAnterior = document.getElementById('btnAnterior');
+        this.btnProximo = document.getElementById('btnProximo');
+        this.btnEnviar = document.getElementById('btnEnviar');
+        this.progressFill = document.getElementById('progressFill');
+        this.currentStepSpan = document.getElementById('currentStep');
+
+        this.init();
+    }
+
+    init() {
+        // Event listeners
+        this.btnProximo.addEventListener('click', (e) => this.handleProximo(e));
+        this.btnAnterior.addEventListener('click', (e) => this.handleAnterior(e));
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+        // Validação em tempo real
+        this.setupRealTimeValidation();
+
+        // Atualizar interface inicial
+        this.updateUI();
+    }
+
+    setupRealTimeValidation() {
+        const inputs = this.form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                this.validateField(input);
+            });
+        });
+    }
+
+    handleProximo(e) {
+        e.preventDefault();
+
+        // Validar campos da etapa atual
+        if (!this.validateStep(this.currentStep)) {
+            return;
+        }
+
+        // Ir para próxima etapa
+        if (this.currentStep < this.totalSteps) {
+            this.goToStep(this.currentStep + 1);
+        }
+    }
+
+    handleAnterior(e) {
+        e.preventDefault();
+
+        // Ir para etapa anterior
+        if (this.currentStep > 1) {
+            this.goToStep(this.currentStep - 1);
+        }
+    }
+
+    goToStep(stepNumber) {
+        // Esconder etapa atual
+        document.getElementById(`step${this.currentStep}`).classList.remove('active');
+
+        // Atualizar step atual
+        this.currentStep = stepNumber;
+
+        // Mostrar nova etapa
+        document.getElementById(`step${this.currentStep}`).classList.add('active');
+
+        // Atualizar UI
+        this.updateUI();
+
+        // Scroll para o topo do formulário
+        document.querySelector('.orcamento-header').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    updateUI() {
+        // Atualizar texto de progresso
+        this.currentStepSpan.textContent = this.currentStep;
+
+        // Atualizar barra de progresso
+        const percentual = (this.currentStep / this.totalSteps) * 100;
+        this.progressFill.style.width = percentual + '%';
+
+        // Mostrar/esconder botão anterior
+        if (this.currentStep === 1) {
+            this.btnAnterior.style.display = 'none';
+        } else {
+            this.btnAnterior.style.display = 'flex';
+        }
+
+        // Mostrar/esconder botão próximo e enviar
+        if (this.currentStep === this.totalSteps) {
+            this.btnProximo.style.display = 'none';
+            this.btnEnviar.style.display = 'flex';
+        } else {
+            this.btnProximo.style.display = 'flex';
+            this.btnEnviar.style.display = 'none';
+        }
+    }
+
+    validateStep(stepNumber) {
+        const stepElement = document.getElementById(`step${stepNumber}`);
+        const requiredFields = stepElement.querySelectorAll('[required]');
+
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    }
+
+    validateField(field) {
+        const formGroup = field.closest('.form-group');
+        const errorElement = formGroup.querySelector('.error-message');
+
+        let isValid = true;
+        let errorMessage = '';
+
+        // Validação por tipo de campo
+        if (field.type === 'email') {
+            if (!this.isValidEmail(field.value)) {
+                isValid = false;
+                errorMessage = 'Por favor, digite um email válido';
+            }
+        } else if (field.type === 'tel') {
+            if (!this.isValidPhone(field.value)) {
+                isValid = false;
+                errorMessage = 'Por favor, digite um telefone válido';
+            }
+        } else if (field.type === 'number') {
+            if (field.value < 1) {
+                isValid = false;
+                errorMessage = 'O número deve ser maior que 0';
+            }
+        } else if (field.type === 'date') {
+            if (!this.isValidDate(field.value)) {
+                isValid = false;
+                errorMessage = 'Por favor, selecione uma data válida';
+            }
+        } else if (field.tagName === 'SELECT') {
+            if (field.value === '') {
+                isValid = false;
+                errorMessage = 'Por favor, selecione uma opção';
+            }
+        } else if (field.value.trim() === '') {
+            isValid = false;
+            errorMessage = 'Este campo é obrigatório';
+        }
+
+        // Atualizar visual do campo
+        if (isValid) {
+            formGroup.classList.remove('error');
+            if (errorElement) {
+                errorElement.classList.remove('show');
+            }
+        } else {
+            formGroup.classList.add('error');
+            if (errorElement) {
+                errorElement.textContent = errorMessage;
+                errorElement.classList.add('show');
+            }
+        }
+
+        return isValid;
+    }
+
+    isValidEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    isValidPhone(phone) {
+        const regex = /^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$/;
+        return regex.test(phone.replace(/\s/g, ''));
+    }
+
+    isValidDate(date) {
+        if (!date) return false;
+
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Data não pode ser anterior à hoje
+        return selectedDate >= today;
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+
+        // Validar última etapa
+        if (!this.validateStep(this.totalSteps)) {
+            return;
+        }
+
+        // Coletar dados do formulário
+        const formData = new FormData(this.form);
+        const dados = Object.fromEntries(formData);
+
+        // Coletar checkboxes (restrições)
+        const restricoes = [];
+        document.querySelectorAll('input[name="restricoes"]:checked').forEach(checkbox => {
+            restricoes.push(checkbox.value);
+        });
+        dados.restricoes = restricoes.join(', ');
+
+        console.log('Dados do formulário:', dados);
+
+        // Aqui você pode enviar os dados para um servidor
+        // this.enviarParaServidor(dados);
+
+        // Por enquanto, mostrar mensagem de sucesso
+        this.mostrarSucesso();
+    }
+
+    mostrarSucesso() {
+        // Esconder formulário
+        document.querySelector('.form-container').innerHTML = `
+            <div class="sucesso-message">
+                <div class="sucesso-icon">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <h2>Orçamento Enviado!</h2>
+                <p>Obrigado por solicitar nossos serviços. Entraremos em contato em até 48 horas úteis com uma proposta personalizada.</p>
+                <p class="sucesso-email">Um email de confirmação foi enviado para seu endereço de email.</p>
+                <a href="index.html" class="btn-voltar">
+                    <i class="bi bi-house"></i> Voltar para Home
+                </a>
+            </div>
+        `;
+
+        // Scroll para topo
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    enviarParaServidor(dados) {
+        // Implementar envio via fetch
+        /*
+        fetch('/api/orcamento', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dados)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Sucesso:', data);
+            this.mostrarSucesso();
+        })
+        .catch((error) => {
+            console.error('Erro:', error);
+            alert('Erro ao enviar formulário. Tente novamente.');
+        });
+        */
+    }
+}
+
+// Inicializar formulário quando documento carregar
+document.addEventListener('DOMContentLoaded', () => {
+    new FormularioOrcamento();
+});

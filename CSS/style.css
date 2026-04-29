@@ -1271,3 +1271,559 @@ body.cadastro-page .btn-login:hover {
 body.cadastro-page .btn-login:hover i {
   color: white !important;
 }
+
+.missao-valores-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f8f8f8;
+}
+
+.missao-valores-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #333;
+  font-family: 'Playfair Display', serif;
+}
+
+.missao-valores-section p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 900px;
+  margin: 0 auto 50px;
+  line-height: 1.6;
+}
+
+.valores-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 40px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 12px 28px;
+  border: 2px solid #d4a574; 
+  border-radius: 30px;
+  color: #d4a574;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.badge:hover {
+  background-color: #d4a574;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+}
+
+@media (max-width: 768px) {
+  .missao-valores-section {
+    padding: 40px 15px;
+  }
+
+  .missao-valores-section h2 {
+    font-size: 2rem;
+  }
+
+  .valores-badges {
+    gap: 10px;
+  }
+
+  .badge {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ================================================
+   FORMULÁRIO DE ORÇAMENTO - ESTILOS
+   ================================================ */
+
+.orcamento-container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.orcamento-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.orcamento-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+}
+
+.orcamento-header p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* ================================================
+   INDICADOR DE PROGRESSO
+   ================================================ */
+
+.progress-bar-container {
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.progress-indicator {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.progress-text {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e8e8e8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4a574 0%, #c99560 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 25%;
+}
+
+/* ================================================
+   CONTAINER DO FORMULÁRIO
+   ================================================ */
+
+.form-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 50px 40px;
+    margin-bottom: 60px;
+}
+
+.orcamento-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================================================
+   ETAPAS DO FORMULÁRIO
+   ================================================ */
+
+.form-step {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.form-step.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-header {
+    margin-bottom: 40px;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 30px;
+}
+
+.step-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.step-header p {
+    color: #999;
+    font-size: 1rem;
+}
+
+/* ================================================
+   CAMPOS DO FORMULÁRIO
+   ================================================ */
+
+.form-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.required {
+    color: #d4a574;
+}
+
+.optional {
+    font-size: 0.85rem;
+    color: #999;
+    font-weight: normal;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #d4a574;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ================================================
+   CHECKBOXES
+   ================================================ */
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #d4a574;
+}
+
+.checkbox-item span {
+    font-size: 0.95rem;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.checkbox-item input[type="checkbox"]:checked + span {
+    color: #d4a574;
+    font-weight: 600;
+}
+
+/* ================================================
+   MENSAGENS DE ERRO
+   ================================================ */
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+}
+
+/* ================================================
+   BOTÕES DE NAVEGAÇÃO
+   ================================================ */
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.btn-anterior,
+.btn-proximo,
+.btn-submit {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-anterior {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-anterior:hover {
+    background-color: #e8e8e8;
+    transform: translateX(-2px);
+}
+
+.btn-proximo {
+    background-color: #d4a574;
+    color: white;
+    border: none;
+}
+
+.btn-proximo:hover {
+    background-color: #c99560;
+    transform: translateX(2px);
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+}
+
+.btn-submit {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+}
+
+.btn-submit:hover {
+    background-color: #229954;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.btn-anterior:active,
+.btn-proximo:active,
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+/* ================================================
+   RESPONSIVIDADE
+   ================================================ */
+
+@media (max-width: 768px) {
+    .orcamento-container {
+        margin: 40px auto;
+    }
+
+    .orcamento-header h1 {
+        font-size: 2rem;
+    }
+
+    .form-container {
+        padding: 30px 20px;
+    }
+
+    .step-header {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+    }
+
+    .step-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-anterior,
+    .btn-proximo,
+    .btn-submit {
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orcamento-container {
+        padding: 0 15px;
+        margin: 30px auto;
+    }
+
+    .orcamento-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .orcamento-header p {
+        font-size: 1rem;
+    }
+
+    .form-container {
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+
+    .step-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Evita zoom em mobile */
+    }
+
+    .progress-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* ================================================
+   MENSAGEM DE SUCESSO
+   ================================================ */
+
+.sucesso-message {
+    text-align: center;
+    padding: 60px 40px;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sucesso-icon {
+    font-size: 4rem;
+    color: #27ae60;
+    margin-bottom: 20px;
+    animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.sucesso-message h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+}
+
+.sucesso-message p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.sucesso-email {
+    font-size: 0.95rem;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 30px;
+    background-color: #d4a574;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-voltar:hover {
+    background-color: #c99560;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+}
+
+.btn-voltar:active {
+    transform: scale(0.98);
+}
