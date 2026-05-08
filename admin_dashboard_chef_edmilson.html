@@ -1,0 +1,298 @@
+
+<style>
+  .ad { font-family:Arial,sans-serif; background:#0f172a; min-height:100vh; color:#e2e8f0; }
+  .ad-top { background:#1e293b; border-bottom:1px solid rgba(210,170,119,0.12); padding:0 28px; display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .ad-logo { font-family:Georgia,serif; font-size:1.2rem; color:#d2aa77; font-style:italic; }
+  .ad-top-right { display:flex; align-items:center; gap:16px; }
+  .ad-admin-tag { font-size:0.75rem; color:#64748b; background:#0f172a; padding:5px 12px; border-radius:20px; border:1px solid #334155; }
+  .ad-logout { font-size:0.8rem; color:#94a3b8; background:none; border:none; cursor:pointer; padding:6px 10px; border-radius:6px; transition:color 0.2s; }
+  .ad-logout:hover { color:#d2aa77; }
+  .ad-main { padding:28px; }
+  .ad-page-title { font-size:1.5rem; font-weight:700; color:#f1f5f9; margin-bottom:4px; }
+  .ad-page-sub { font-size:0.85rem; color:#64748b; margin-bottom:24px; }
+  .ad-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px; }
+  .ad-stat { background:#1e293b; border-radius:10px; padding:18px 20px; border:1px solid rgba(210,170,119,0.08); }
+  .ad-stat-label { font-size:0.72rem; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:8px; }
+  .ad-stat-val { font-size:1.7rem; font-weight:700; }
+  .ad-stat-val.gold { color:#d2aa77; }
+  .ad-stat-val.yellow { color:#fbbf24; }
+  .ad-stat-val.green { color:#34d399; }
+  .ad-stat-val.red { color:#f87171; }
+  .ad-toolbar { display:flex; gap:12px; margin-bottom:18px; flex-wrap:wrap; align-items:center; }
+  .ad-search { flex:1; min-width:200px; position:relative; }
+  .ad-search input {
+    width:100%; padding:10px 16px 10px 38px; background:#1e293b; border:1px solid #334155;
+    border-radius:8px; color:#e2e8f0; font-size:0.88rem; outline:none; transition:border-color 0.2s;
+  }
+  .ad-search input::placeholder { color:#475569; }
+  .ad-search input:focus { border-color:#d2aa77; }
+  .ad-search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#475569; font-size:13px; pointer-events:none; }
+  .ad-select {
+    padding:10px 14px; background:#1e293b; border:1px solid #334155; border-radius:8px;
+    color:#e2e8f0; font-size:0.88rem; outline:none; cursor:pointer;
+  }
+  .ad-select:focus { border-color:#d2aa77; }
+  .ad-table-wrap { background:#1e293b; border-radius:12px; border:1px solid rgba(210,170,119,0.08); overflow:hidden; }
+  table { width:100%; border-collapse:collapse; font-size:0.84rem; }
+  thead tr { background:#0f172a; }
+  thead th { padding:13px 16px; text-align:left; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#64748b; white-space:nowrap; }
+  tbody tr { border-top:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
+  tbody tr:hover { background:rgba(210,170,119,0.04); }
+  td { padding:13px 16px; color:#cbd5e1; vertical-align:middle; }
+  td.name { color:#f1f5f9; font-weight:500; }
+  td.event-type { color:#94a3b8; }
+  .badge {
+    display:inline-block; padding:4px 11px; border-radius:20px; font-size:0.72rem; font-weight:700; letter-spacing:0.5px; white-space:nowrap;
+  }
+  .badge.pendente { background:rgba(251,191,36,0.12); color:#fbbf24; border:1px solid rgba(251,191,36,0.25); }
+  .badge.respondido { background:rgba(52,211,153,0.12); color:#34d399; border:1px solid rgba(52,211,153,0.25); }
+  .badge.recusado { background:rgba(248,113,113,0.12); color:#f87171; border:1px solid rgba(248,113,113,0.25); }
+  .ad-btn-action {
+    padding:5px 12px; border-radius:6px; font-size:0.75rem; font-weight:600; cursor:pointer;
+    border:1px solid #334155; background:#0f172a; color:#94a3b8; transition:all 0.2s; margin-right:4px;
+  }
+  .ad-btn-action:hover { border-color:#d2aa77; color:#d2aa77; }
+  .ad-btn-action.danger:hover { border-color:#f87171; color:#f87171; }
+  .ad-empty { text-align:center; padding:40px; color:#475569; font-size:0.9rem; }
+  .ad-count { font-size:0.8rem; color:#64748b; margin-top:12px; padding:0 4px; }
+
+  /* Modal */
+  .ad-modal-bg {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .ad-modal-bg.open { display:flex; }
+  .ad-modal { background:#1e293b; border-radius:14px; padding:32px; max-width:520px; width:100%; border:1px solid rgba(210,170,119,0.15); }
+  .ad-modal h3 { font-size:1.1rem; color:#f1f5f9; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .ad-modal-row { display:flex; gap:20px; margin-bottom:14px; }
+  .ad-modal-field { flex:1; }
+  .ad-modal-field label { display:block; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#64748b; margin-bottom:5px; }
+  .ad-modal-field span { font-size:0.88rem; color:#cbd5e1; }
+  .ad-modal-status { margin-top:20px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.06); }
+  .ad-modal-status label { display:block; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#64748b; margin-bottom:10px; }
+  .ad-status-btns { display:flex; gap:8px; }
+  .ad-status-btn {
+    flex:1; padding:9px; border-radius:7px; font-size:0.82rem; font-weight:700; cursor:pointer;
+    border:1px solid #334155; background:transparent; transition:all 0.2s;
+  }
+  .ad-status-btn.pendente { color:#fbbf24; border-color:rgba(251,191,36,0.3); }
+  .ad-status-btn.pendente.active, .ad-status-btn.pendente:hover { background:rgba(251,191,36,0.12); border-color:#fbbf24; }
+  .ad-status-btn.respondido { color:#34d399; border-color:rgba(52,211,153,0.3); }
+  .ad-status-btn.respondido.active, .ad-status-btn.respondido:hover { background:rgba(52,211,153,0.12); border-color:#34d399; }
+  .ad-status-btn.recusado { color:#f87171; border-color:rgba(248,113,113,0.3); }
+  .ad-status-btn.recusado.active, .ad-status-btn.recusado:hover { background:rgba(248,113,113,0.12); border-color:#f87171; }
+  .ad-modal-close { width:100%; padding:10px; margin-top:18px; background:#0f172a; border:1px solid #334155; border-radius:7px; color:#94a3b8; cursor:pointer; font-size:0.88rem; transition:all 0.2s; }
+  .ad-modal-close:hover { border-color:#d2aa77; color:#d2aa77; }
+</style>
+
+<div class="ad">
+  <div class="ad-top">
+    <div class="ad-logo">Chef Edmilson</div>
+    <div class="ad-top-right">
+      <span class="ad-admin-tag">&#128100; admin</span>
+      <button class="ad-logout" onclick="logout()">Sair &#8594;</button>
+    </div>
+  </div>
+
+  <div class="ad-main">
+    <div class="ad-page-title">Solicitações de Orçamento</div>
+    <div class="ad-page-sub">Gerencie todas as solicitações recebidas</div>
+
+    <div class="ad-stats">
+      <div class="ad-stat"><div class="ad-stat-label">Total</div><div class="ad-stat-val gold" id="statTotal">0</div></div>
+      <div class="ad-stat"><div class="ad-stat-label">Pendentes</div><div class="ad-stat-val yellow" id="statPend">0</div></div>
+      <div class="ad-stat"><div class="ad-stat-label">Respondidos</div><div class="ad-stat-val green" id="statResp">0</div></div>
+      <div class="ad-stat"><div class="ad-stat-label">Recusados</div><div class="ad-stat-val red" id="statRec">0</div></div>
+    </div>
+
+    <div class="ad-toolbar">
+      <div class="ad-search">
+        <span class="ad-search-icon">&#128269;</span>
+        <input type="text" id="searchInput" placeholder="Buscar por nome, email ou evento..." oninput="render()" />
+      </div>
+      <select class="ad-select" id="filterStatus" onchange="render()">
+        <option value="">Todos os status</option>
+        <option value="pendente">Pendente</option>
+        <option value="respondido">Respondido</option>
+        <option value="recusado">Recusado</option>
+      </select>
+      <select class="ad-select" id="filterEvento" onchange="render()">
+        <option value="">Todos os eventos</option>
+        <option value="casamento">Casamento</option>
+        <option value="aniversario">Aniversário</option>
+        <option value="corporativo">Corporativo</option>
+        <option value="formatura">Formatura</option>
+        <option value="outro">Outro</option>
+      </select>
+    </div>
+
+    <div class="ad-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email / Telefone</th>
+            <th>Evento</th>
+            <th>Data do Evento</th>
+            <th>Convidados</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="ad-empty" id="emptyMsg" style="display:none;">Nenhuma solicitação encontrada.</div>
+    </div>
+    <div class="ad-count" id="countMsg"></div>
+  </div>
+</div>
+
+<!-- Modal de detalhes -->
+<div class="ad-modal-bg" id="modalBg" onclick="closeModal(event)">
+  <div class="ad-modal" id="modal">
+    <h3 id="modalTitle">Detalhes da Solicitação</h3>
+    <div class="ad-modal-row">
+      <div class="ad-modal-field"><label>Nome</label><span id="mNome"></span></div>
+      <div class="ad-modal-field"><label>Convidados</label><span id="mConv"></span></div>
+    </div>
+    <div class="ad-modal-row">
+      <div class="ad-modal-field"><label>Email</label><span id="mEmail"></span></div>
+      <div class="ad-modal-field"><label>Telefone</label><span id="mTel"></span></div>
+    </div>
+    <div class="ad-modal-row">
+      <div class="ad-modal-field"><label>Tipo de Evento</label><span id="mEvento"></span></div>
+      <div class="ad-modal-field"><label>Data do Evento</label><span id="mData"></span></div>
+    </div>
+    <div class="ad-modal-row">
+      <div class="ad-modal-field"><label>Endereço</label><span id="mEndereco"></span></div>
+      <div class="ad-modal-field"><label>Restrições</label><span id="mRestricoes"></span></div>
+    </div>
+    <div class="ad-modal-row">
+      <div class="ad-modal-field" style="flex:2"><label>Observações</label><span id="mMsg"></span></div>
+    </div>
+    <div class="ad-modal-status">
+      <label>Alterar Status</label>
+      <div class="ad-status-btns">
+        <button class="ad-status-btn pendente" onclick="setStatus('pendente')">&#9679; Pendente</button>
+        <button class="ad-status-btn respondido" onclick="setStatus('respondido')">&#10003; Respondido</button>
+        <button class="ad-status-btn recusado" onclick="setStatus('recusado')">&#10005; Recusado</button>
+      </div>
+    </div>
+    <button class="ad-modal-close" onclick="document.getElementById('modalBg').classList.remove('open')">Fechar</button>
+  </div>
+</div>
+
+<script>
+/* =============================================
+   DADOS MOCK — substituir por fetch Django:
+   GET /api/orcamentos/       → lista
+   PATCH /api/orcamentos/:id/ → { status }
+   ============================================= */
+var orcamentos = [
+  { id:1, nome:'Ana Beatriz Souza', email:'ana.b@email.com', telefone:'(15) 99123-4567', convidados:80, tipoEvento:'casamento', dataEvento:'2026-08-15', rua:'Rua das Flores', numero:'230', bairro:'Centro', cidade:'Sorocaba', estado:'SP', cep:'18010-000', restricoes:'Vegetariano', mensagem:'Gostaria de um menu italiano refinado com opções veganas.', status:'pendente' },
+  { id:2, nome:'Carlos Eduardo Lima', email:'carlos.lima@corp.com', telefone:'(15) 98765-0011', convidados:120, tipoEvento:'corporativo', dataEvento:'2026-07-10', rua:'Av. Paulista', numero:'1500', bairro:'Bela Vista', cidade:'São Paulo', estado:'SP', cep:'01310-100', restricoes:'Sem lactose', mensagem:'Evento de lançamento de produto, precisamos de finger foods.', status:'respondido' },
+  { id:3, nome:'Mariana Fernandes', email:'mari.fern@gmail.com', telefone:'(15) 97654-3210', convidados:30, tipoEvento:'aniversario', dataEvento:'2026-06-20', rua:'Rua Boa Vista', numero:'45', bairro:'Jardim Paulistano', cidade:'Sorocaba', estado:'SP', cep:'18080-320', restricoes:'Alergia a frutos do mar', mensagem:'', status:'pendente' },
+  { id:4, nome:'Roberto Almeida', email:'roberto.a@email.com', telefone:'(11) 96543-2109', convidados:50, tipoEvento:'formatura', dataEvento:'2026-09-05', rua:'Rua XV de Novembro', numero:'88', bairro:'Nova Sorocaba', cidade:'Sorocaba', estado:'SP', cep:'18092-000', restricoes:'Vegano', mensagem:'Formatura de medicina, queremos algo sofisticado.', status:'recusado' },
+  { id:5, nome:'Juliana Castro', email:'ju.castro@empresa.com', telefone:'(15) 95432-1098', convidados:200, tipoEvento:'inauguração', dataEvento:'2026-10-12', rua:'Av. Independência', numero:'500', bairro:'Éden', cidade:'Sorocaba', estado:'SP', cep:'18103-000', restricoes:'', mensagem:'Inauguração de restaurante, precisamos de um buffet completo.', status:'pendente' },
+];
+
+var currentId = null;
+
+function stats() {
+  document.getElementById('statTotal').textContent = orcamentos.length;
+  document.getElementById('statPend').textContent = orcamentos.filter(o=>o.status==='pendente').length;
+  document.getElementById('statResp').textContent = orcamentos.filter(o=>o.status==='respondido').length;
+  document.getElementById('statRec').textContent = orcamentos.filter(o=>o.status==='recusado').length;
+}
+
+function filtered() {
+  var q = (document.getElementById('searchInput').value||'').toLowerCase();
+  var fs = document.getElementById('filterStatus').value;
+  var fe = document.getElementById('filterEvento').value;
+  return orcamentos.filter(function(o) {
+    var matchQ = !q || o.nome.toLowerCase().includes(q) || o.email.toLowerCase().includes(q) || o.tipoEvento.toLowerCase().includes(q);
+    var matchS = !fs || o.status === fs;
+    var matchE = !fe || o.tipoEvento === fe;
+    return matchQ && matchS && matchE;
+  });
+}
+
+function fmt(dateStr) {
+  if (!dateStr) return '—';
+  var p = dateStr.split('-');
+  return p[2]+'/'+p[1]+'/'+p[0];
+}
+
+function render() {
+  var rows = filtered();
+  var tbody = document.getElementById('tableBody');
+  document.getElementById('emptyMsg').style.display = rows.length ? 'none' : 'block';
+  document.getElementById('countMsg').textContent = rows.length + ' solicitação(ões) encontrada(s)';
+  tbody.innerHTML = rows.map(function(o) {
+    return '<tr>' +
+      '<td class="name">'+o.nome+'</td>' +
+      '<td><div>'+o.email+'</div><div style="color:#64748b;font-size:0.78rem;">'+o.telefone+'</div></td>' +
+      '<td class="event-type">'+cap(o.tipoEvento)+'</td>' +
+      '<td>'+fmt(o.dataEvento)+'</td>' +
+      '<td>'+o.convidados+'</td>' +
+      '<td><span class="badge '+o.status+'">'+cap(o.status)+'</span></td>' +
+      '<td>' +
+        '<button class="ad-btn-action" onclick="openModal('+o.id+')">&#128065; Ver</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+  stats();
+}
+
+function cap(s) { return s ? s.charAt(0).toUpperCase()+s.slice(1) : '—'; }
+
+function openModal(id) {
+  var o = orcamentos.find(function(x){ return x.id===id; });
+  if (!o) return;
+  currentId = id;
+  document.getElementById('mNome').textContent = o.nome;
+  document.getElementById('mConv').textContent = o.convidados + ' pessoas';
+  document.getElementById('mEmail').textContent = o.email;
+  document.getElementById('mTel').textContent = o.telefone;
+  document.getElementById('mEvento').textContent = cap(o.tipoEvento);
+  document.getElementById('mData').textContent = fmt(o.dataEvento);
+  document.getElementById('mEndereco').textContent = o.rua+', '+o.numero+' - '+o.bairro+', '+o.cidade+'/'+o.estado;
+  document.getElementById('mRestricoes').textContent = o.restricoes || 'Nenhuma';
+  document.getElementById('mMsg').textContent = o.mensagem || 'Sem observações.';
+  document.querySelectorAll('.ad-status-btn').forEach(function(b){ b.classList.remove('active'); });
+  var active = document.querySelector('.ad-status-btn.'+o.status);
+  if (active) active.classList.add('active');
+  document.getElementById('modalBg').classList.add('open');
+}
+
+function setStatus(newStatus) {
+  var o = orcamentos.find(function(x){ return x.id===currentId; });
+  if (!o) return;
+  o.status = newStatus;
+
+  /* --- INTEGRAÇÃO DJANGO (descomentar) ---
+  fetch('/api/orcamentos/' + currentId + '/', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+    body: JSON.stringify({ status: newStatus })
+  });
+  */
+
+  document.querySelectorAll('.ad-status-btn').forEach(function(b){ b.classList.remove('active'); });
+  var active = document.querySelector('.ad-status-btn.'+newStatus);
+  if (active) active.classList.add('active');
+  render();
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalBg')) {
+    document.getElementById('modalBg').classList.remove('open');
+  }
+}
+
+function logout() {
+  sendPrompt('Fiz logout do painel admin. Como integro esse sistema com o Django?');
+}
+
+render();
+</script>
